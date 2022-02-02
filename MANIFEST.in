@@ -1,0 +1,7 @@
+include src/qt_app/recognition/mediapipe/pretrained_model/labels.pickle
+include src/qt_app/recognition/mediapipe/pretrained_model/model_random_forest.pickle
+
+# Include the README
+include *.md
+
+include LICENSE.txt
