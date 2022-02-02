@@ -18,7 +18,6 @@ class MainWindow(QMainWindow):
 
         self.camera = Camera(self.viewfinder)
 
-        # making it central widget of main window
         self.setCentralWidget(self.viewfinder)
         self.showFullScreen()
 
