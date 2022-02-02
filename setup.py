@@ -8,7 +8,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     name='Hand-gestures-recognition',
-    packages=['Hand-gestures-recognition'],
+    packages=['hand_gestures_recognition'],
     version='0.1.1',
     description='An app for hand gesture recognition.',
     author='Mikolaj Sawicki',

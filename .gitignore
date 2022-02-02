@@ -1,3 +1,7 @@
 .idea/
 venv/
 data/images/*
+*.pyc
+build/
+dist/
+Hand_gestures_recognition.egg-info/
