@@ -1,4 +1,4 @@
-from JointDetection import JointDetection
+from .JointDetection import JointDetection
 import pickle
 import pathlib
 import numpy as np

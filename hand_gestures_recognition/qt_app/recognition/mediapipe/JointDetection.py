@@ -34,7 +34,7 @@ class JointDetection:
 
             landmark = res.multi_hand_landmarks[0].landmark
 
-            points = np.array(np.array([p.x, p.y]) for p in landmark)
+            points = np.array([np.array([p.x, p.y]) for p in landmark])
             threes = split_by_threes(points)
 
             angles = [angle(*t) for t in threes]
