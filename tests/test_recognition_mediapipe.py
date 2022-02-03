@@ -1,4 +1,4 @@
-from hand_gestures_recognition.qt_app.recognition.mediapipe.MPGestureRecognition import MPGestureRecognition
+from hand_gestures_recognition.mediapipe.MPGestureRecognition import MPGestureRecognition
 import cv2
 from unittest import TestCase
 import pathlib
