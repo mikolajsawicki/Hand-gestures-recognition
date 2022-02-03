@@ -7,6 +7,7 @@ import pathlib
 TEST_IMAGE_W = pathlib.Path(__file__).parent.joinpath('test_image_w.png')
 
 
+
 class TestMPGestureRecognition(TestCase):
 
     def test_mp_gesture_recognition(self):
