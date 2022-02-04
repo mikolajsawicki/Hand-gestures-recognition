@@ -1,5 +1,5 @@
 import cv2
-from PyQt5.QtCore import QThread, QObject, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
 import numpy as np
 
@@ -26,7 +26,6 @@ class Camera(QObject):
             rval, frame = self._vc.read()
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             self.imageCaptured.emit(frame)
-            QThread.msleep(30)
 
         self._vc.release()
         self.finished.emit()

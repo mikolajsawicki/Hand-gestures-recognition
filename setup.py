@@ -17,7 +17,7 @@ setup(
     # scripts=['bin/'],
     url='https://github.com/mikolajsawicki/Hand-gestures-recognition',
     long_description=long_description,
-    install_requires=['numpy', 'opencv-python', 'tensorflow', 'PyQt5', 'mediapipe'],
+    install_requires=['numpy', 'opencv-python', 'tensorflow', 'PyQt5', 'mediapipe', 'scikit-learn'],
     download_url='https://github.com/mikolajsawicki/Hand-gestures-recognition',
     keywords=['hand', 'gesture', 'recognition', 'cnn', 'mediapipe', 'random forest', 'machine learning'],
     python_requires='>=3',
