@@ -15,7 +15,7 @@ class MPGestureRecognition:
         self.model = load_pickle(PATH_MODEL)
         self.gesture_labels = load_pickle(PATH_LABELS)
 
-    def recognize(self, img: np.array, get_image_output=False):
+    def recognize(self, img: np.ndarray, get_image_output=False):
         """
         :param img: image to recognize
         :param get_image_output: if set, then returns label: prob dict + processed image

@@ -14,7 +14,7 @@ class JointDetection:
         )
 
 
-    def get_angles(self, image: np.array, get_image_output=False):
+    def get_angles(self, image: np.ndarray, get_image_output=False):
         """
         :param image: numpy array for RGB image
         :param get_image_output: if set to True, then image with the annotations is returned
