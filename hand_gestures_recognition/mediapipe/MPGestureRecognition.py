@@ -15,17 +15,24 @@ class MPGestureRecognition:
         self.model = load_pickle(PATH_MODEL)
         self.gesture_labels = load_pickle(PATH_LABELS)
 
-    def recognize(self, img: np.array):
+    def recognize(self, img: np.array, get_image_output=False):
+        """
+        :param img: image to recognize
+        :param get_image_output: if set, then returns label: prob dict + processed image
+        :return: dictionary of 'gesture_label': float probability
+                 If get_image_output is True, then returns a tuple of dict and processed image
         """
 
-        :param img:
-        :return: dictionary of 'gesture_label': float probability
-        """
-        angles, _, _ = self.joint_detection.get_angles(img)
-        angles = DataFrame([angles], columns=JointDetection.get_angles_labels())
-        probs = self.model.predict_proba(angles)[0]
-        recognitions = dict(zip(self.gesture_labels, probs))
-        return recognitions
+        ret = self.joint_detection.get_angles(img, get_image_output)
+        if ret is not None:
+            angles, _, image = ret
+            angles = DataFrame([angles], columns=JointDetection.get_angles_labels())
+            probs = self.model.predict_proba(angles)[0]
+            recognitions = dict(zip(self.gesture_labels, probs))
+
+            return recognitions, image if get_image_output else recognitions
+
+        return None
 
 
 def load_pickle(filepath):

@@ -30,7 +30,7 @@ class JointDetection:
 
         if res.multi_hand_landmarks:
             if get_image_output:
-                output_img = annotate_img(image.numpy(), res)
+                output_img = annotate_img(image, res)
 
             landmark = res.multi_hand_landmarks[0].landmark
 

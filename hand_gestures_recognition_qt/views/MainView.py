@@ -1,8 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QStatusBar, QToolBar, QVBoxLayout, QLabel, QWidget
-from PyQt5.QtMultimediaWidgets import QCameraViewfinder
 
 
-class MainUI(QMainWindow):
+class MainView(QMainWindow):
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -11,21 +10,9 @@ class MainUI(QMainWindow):
         self._createMenu()
         self._createToolBar()
         self._createStatusBar()
+        self._createCentralLayout()
 
-        self.cameraDisplay = QCameraViewfinder()
-        self.cameraDisplay.show()
-
-        self.gestureLabel = QLabel('No gesture detected yet.')
-
-        self.centralLayout = QVBoxLayout()
-        self._centralWidget = QWidget(self)
-        self.setCentralWidget(self._centralWidget)
-        self._centralWidget.setLayout(self.centralLayout)
-
-        self.centralLayout.addWidget(self.cameraDisplay)
-        self.centralLayout.addWidget(self.gestureLabel)
-
-        self.showFullScreen()
+        self.show()
 
 
     def _createMenu(self):
@@ -45,3 +32,18 @@ class MainUI(QMainWindow):
         self.setStatusBar(status)
 
 
+    def _createCentralLayout(self):
+        self.cameraDisplay = QLabel()
+        self.gestureLabel = QLabel('No gesture detected yet.')
+
+        self.centralLayout = QVBoxLayout()
+        self._centralWidget = QWidget(self)
+        self.setCentralWidget(self._centralWidget)
+        self._centralWidget.setLayout(self.centralLayout)
+
+        self.centralLayout.addWidget(self.cameraDisplay)
+        self.centralLayout.addWidget(self.gestureLabel)
+
+
+    def setGestureText(self, text):
+        self.gestureLabel.setText(text)

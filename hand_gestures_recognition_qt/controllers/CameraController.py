@@ -1,28 +1,38 @@
-from PyQt5.QtMultimedia import QCameraInfo, QCamera, QCameraImageCapture
-from .utils import error
+import cv2
+from PyQt5.QtCore import QThread, QObject, pyqtSignal
+from PyQt5.QtWidgets import QMessageBox
+import numpy as np
 
 
-class CameraController:
-    def __init__(self, viewfinder, image_captured_callback):
-        self.viewfinder = viewfinder
-        self._initCamera()
-        self.camera = QCamera(self.available_cameras[0])
-        self.camera.setViewfinder(self.viewfinder)
-        self._startCamera(self.camera)
-        self.imageCapturedCallback = image_captured_callback
+class Camera(QObject):
+    finished = pyqtSignal()
+    imageCaptured = pyqtSignal(np.ndarray)
 
+    def __init__(self, camera_id=0):
+        super().__init__()
+        self._camera_id = camera_id
+        self._vc = None
+        self._running = False
 
-    def _initCamera(self):
-        # TODO: add chosing camera
-        self.available_cameras = QCameraInfo.availableCameras()
-        if not self.available_cameras:
-            self.alert('No camera detected.')
+    def start(self):
+        self._running = True
+        self._vc = cv2.VideoCapture(self._camera_id)
 
+        if not self._vc.isOpened():
+            msg_box = QMessageBox()
+            msg_box.setText("Failed to open camera: %s." % self._camera_id)
 
-    def _startCamera(self, camera: QCamera) -> None:
-        camera.setCaptureMode(QCamera.CaptureStillImage)
-        camera.error.connect(lambda: error(camera.errorString()))
-        camera.start()
-        self.capture = QCameraImageCapture(camera)
-        self.capture.error.connect(lambda error_msg, error, msg: error(msg))
-        #self.capture.imageCaptured.connect(lambda d, i: self.imageCapturedCallback(d, i))
+        while self._running:
+            rval, frame = self._vc.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            self.imageCaptured.emit(frame)
+            QThread.msleep(30)
+
+        self._vc.release()
+        self.finished.emit()
+
+    def stop(self):
+        self._running = False
+
+    def flush(self):
+        pass
