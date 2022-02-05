@@ -30,7 +30,7 @@ class MPGestureRecognition:
             probs = self.model.predict_proba(angles)[0]
             recognitions = dict(zip(self.gesture_labels, probs))
 
-            return recognitions, image if get_image_output else recognitions
+            return (recognitions, image) if get_image_output else recognitions
 
         return None
 

@@ -1,15 +1,15 @@
-from model import get_model
 import numpy as np
 from keras.preprocessing import image as keras_image_ops
 import tensorflow as tf
 import pickle
-from skin_detector.SkinDetector import SkinDetector
 import pathlib
+from .model import get_model
+from .skin_detector.SkinDetector import SkinDetector
 
 
-PATH_MODEL = pathlib.Path(__file__).parent.joinpath('pretrained_model').joinpath('model_random_forest.pickle')
+PATH_MODEL = pathlib.Path(__file__).parent.joinpath('pretrained_model').joinpath('model')
 PATH_LABELS = pathlib.Path(__file__).parent.joinpath('pretrained_model').joinpath('labels.pickle')
-PATH_IMAGE_SIZE = pathlib.Path(__file__).parent.joinpath('pretrained_model').joinpath('image_size.pickle')
+PATH_IMAGE_SIZE = pathlib.Path(__file__).parent.joinpath('pretrained_model').joinpath('img_size.pickle')
 PATH_SKIN_DETECTOR = pathlib.Path(__file__).parent.joinpath('skin_detector').joinpath('pretrained_model')
 
 

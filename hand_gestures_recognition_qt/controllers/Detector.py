@@ -23,8 +23,8 @@ class Detector(QObject):
         rec = self._recognition.recognize(img, get_image_output=False)
 
         if rec:
-            rec_dict, img = rec
-            rec_dict = {lab: prob for lab, prob in rec_dict.items() if prob > 0.5}
+            rec_dict = rec
+            rec_dict = {lab: prob for lab, prob in rec_dict.items() if prob > 0.4}
             if rec_dict:
                 lab = max(rec_dict, key=rec_dict.get)
                 return lab

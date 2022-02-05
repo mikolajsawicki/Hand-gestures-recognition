@@ -4,6 +4,7 @@ import numpy as np
 from .utils import numpy_to_qimage
 from .CameraController import Camera
 from .Detector import Detector
+import cv2
 
 
 class MainController(QObject):
@@ -14,6 +15,7 @@ class MainController(QObject):
         self._view = view
         self._initCamera()
         self._initDetector()
+        self._gesture_text = ''
 
     def _initCamera(self):
         self._cameraThread = QThread()
@@ -41,12 +43,12 @@ class MainController(QObject):
             label = self._detector.recogniseImage(img)
             if label is not None:
                 self._view.setGestureText(label)
+                self._gesture_text = label
 
-        qimg = numpy_to_qimage(img)
+        label_pos = int(img.shape[1] * 0.5), int(img.shape[0] * 0.9)
+        labeled_img = cv2.putText(img=img, text=self._gesture_text, org=label_pos, fontFace=3, fontScale=3,
+                                   color=(0, 0, 255), thickness=5)
+
+        qimg = numpy_to_qimage(labeled_img)
         qpix = QPixmap.fromImage(qimg)
         self._view.cameraDisplay.setPixmap(qpix)
-
-
-
-
-
