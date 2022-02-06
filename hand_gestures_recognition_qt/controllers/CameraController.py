@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 import numpy as np
 
 
-class Camera(QObject):
+class CameraController(QObject):
     finished = pyqtSignal()
     imageCaptured = pyqtSignal(np.ndarray)
 
