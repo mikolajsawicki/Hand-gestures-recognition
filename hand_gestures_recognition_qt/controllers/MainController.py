@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread, pyqtSignal, QObject
+from PyQt5.QtCore import QThread, pyqtSignal, QObject, QMutex
 from PyQt5.QtGui import QPixmap
 import numpy as np
 from .utils import numpy_to_qimage
@@ -15,7 +15,8 @@ class MainController(QObject):
         self._view = view
         self._initCamera()
         self._initDetector()
-        self._gesture_text = ''
+        self._gestureText = ''
+        self._gestureTextMutex = QMutex()
 
     def _initCamera(self):
         self._cameraThread = QThread()
@@ -44,12 +45,17 @@ class MainController(QObject):
             self._detector.recogniseImage(img)
 
         label_pos = int(img.shape[1] * 0.2), int(img.shape[0] * 0.9)
-        labeled_img = cv2.putText(img=img, text=self._gesture_text, org=label_pos, fontFace=3, fontScale=2,
-                                   color=(0, 0, 255), thickness=3)
+
+        self._gestureTextMutex.lock()
+        labeled_img = cv2.putText(img=img, text=self._gestureText, org=label_pos, fontFace=3, fontScale=2,
+                                  color=(0, 0, 255), thickness=3)
+        self._gestureTextMutex.unlock()
 
         qimg = numpy_to_qimage(labeled_img)
         qpix = QPixmap.fromImage(qimg)
         self._view.cameraDisplay.setPixmap(qpix)
 
     def _imageDetected(self, label, prob):
-        self._gesture_text = '{} ({:.2%})'.format(label, prob)
+        self._gestureTextMutex.lock()
+        self._gestureText = '{} ({:.2%})'.format(label, prob)
+        self._gestureTextMutex.unlock()
